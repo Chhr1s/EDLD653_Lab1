@@ -1,0 +1,86 @@
+---
+title: "Loan_EDLD653_Lab1"
+author: "Christopher Loan"
+date: "3/30/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+set.seed(123) # Set random number generation
+
+m <- lm(mpg ~ 
+          hp + cyl + drat, 
+        mtcars
+        )
+
+l <- list(a = list(m = matrix(1:12, ncol = 3),
+              	   v = 1:7),
+          b = data.frame(student = 1:15,
+                         score = rnorm(15, 100, 10)))
+```
+
+# 1. From Model Results
+
+## Extract Tolerance
+
+```{r}
+qr_tolerance <- m$qr$tol
+qr_tolerance
+```
+## Extract Term Labels
+
+```{r}
+term_labels <- attr(m$terms, "term.labels")
+term_labels
+```
+
+# 2. From the List
+
+## Two methods to extract `m`
+
+```{r}
+m_method_1 <- l$a$m
+m_method_1
+m_method_2 <- l[['a']][['m']]
+m_method_2
+```
+
+## Extract Third Column
+
+```{r}
+third_col <- l[['a']][['m']][,3]
+third_col
+```
+
+## Extract Score for 7th Student
+
+```{r}
+student_7 <- l[['a']][['m']][7]
+student_7
+```
+
+# Loops 
+
+# 3. Load `airquality` dataset
+
+## Load 
+
+```{r}
+data('airquality')
+head(airquality)
+split_dat <- split(airquality, airquality$Month)
+split_dat
+```
+
+```{r}
+for (i in 5:9){
+  print(split_dat[i,,])
+}
+
+
+```
+
