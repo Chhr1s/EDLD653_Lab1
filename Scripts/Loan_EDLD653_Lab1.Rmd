@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+library(tidyverse)
 set.seed(123) # Set random number generation
  
 m <- lm(mpg ~ 
@@ -31,6 +32,7 @@ l <- list(a = list(m = matrix(1:12, ncol = 3),
 qr_tolerance <- m$qr$tol
 qr_tolerance
 ```
+
 ## Extract Term Labels
 
 ```{r}
@@ -52,6 +54,7 @@ m_method_2
 ## Extract Third Column
 
 ```{r}
+
 third_col <- l[['a']][['m']][,3]
 third_col
 ```
