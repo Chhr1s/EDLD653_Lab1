@@ -1,5 +1,5 @@
 ---
-title: "Loan_EDLD653_Lab1"
+title: "Loan & Klaas EDLD653 Lab1"
 author: "Christopher Loan"
 date: "3/30/2021"
 output: html_document
