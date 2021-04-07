@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 set.seed(123) # Set random number generation
-
+ 
 m <- lm(mpg ~ 
           hp + cyl + drat, 
         mtcars
@@ -72,15 +72,59 @@ student_7
 ```{r}
 data('airquality')
 head(airquality)
+```
+
+## Split it by Month
+
+```{r}
 split_dat <- split(airquality, airquality$Month)
 split_dat
 ```
 
+# 4. Use a for loop to calculate the mean Ozone by month (remember to remove missing data from the calculation)
+
 ```{r}
-for (i in 5:9){
-  print(split_dat[i,,])
+means <- rep(NA, length(split_dat))
+for (i in seq_along(split_dat)){
+  means[i] <- mean(split_dat[[i]]$Ozone, na.rm = T)
+  
 }
+means
+```
 
+# 5. Replicate this calculation with lapply, sapply, and vapply
 
+```{r}
+means_lapply <- lapply(split_dat, function(x) mean(x$Ozone, na.rm = T))
+means_lapply
+```
+
+# 6. Produce separate plots showing the relation between Ozone and Solar.R for each month (with a single loop).
+
+```{r}
+plots <- 
+  lapply(split_dat, function(x){
+    ggplot(x, aes(Ozone, Solar.R)) +
+      geom_point() + 
+      geom_smooth()
+})
+```
+
+```{r}
+#dir.create(here::here("plots"))
+filenames <- here::here("plots", 
+                        paste0('month', 
+                               names(split_dat), ".png"))
+filenames
+```
+
+```{r}
+for (i in seq_along(plots)){
+  ggsave(filename = filenames[i],
+         plots[[i]],
+         device = 'png',
+         width = 6.5, 
+         height = 8)
+}
 ```
 
